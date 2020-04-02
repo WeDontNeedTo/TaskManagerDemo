@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container-fluid{
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+th{
+  text-align: center;
+  font-style: italic;
+}
+#buttons>input{
+  margin: 20px auto;
+  margin-left: 6px;
+  padding: 20px auto;
+  width: 90%;
+  
+}
+
+#name0,#name1,#name2,#name3,
+#name4,#name5,#name6,#name7 {
+  cursor: pointer;
+}

@@ -1,9 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import tasks from './tasks.json';
-import usersdata from './users.json';
-import statusesdata from './statuses.json';
 
 
 function App() {
