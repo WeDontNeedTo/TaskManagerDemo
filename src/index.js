@@ -14,7 +14,6 @@ import statusesdata from './statuses.json';
 export default class MyComponent extends React.Component {
 
   constructor(props){
-    
     super(props);
     this.state={
       tasks:tasks,
@@ -31,16 +30,19 @@ export default class MyComponent extends React.Component {
       this.state.users.users.map((i)=>{
         this.state.statuses.statuses.map((j)=>{
             
-          if (item.contractor_id === i.id ) {
+          if (item.contractor_id === i.id )
+           {
                 item.contractor_id=`${i.last_name} ${i.first_name}`;
                 console.log(item.contractor_id);
-        }
-          if (item.status === j.id ) {
+           }
+
+          if (item.status === j.id ) 
+           {
                 item.status=j.title;
                 console.log(item.status);
-          }
+           }
         })
-    })
+      })
     })
 
     this.setState({
@@ -50,13 +52,12 @@ export default class MyComponent extends React.Component {
   }
 
   render() {
-    
    return(
       <div className="container-fluid">
         <table border="1">
-        <caption>Список задач</caption>
-        <Header/>
-               {this.state.tasks.tasks.map((item)=>{
+          <caption>Список задач</caption>
+            <Header/>
+                {this.state.tasks.tasks.map((item)=>{
                  return(
                   <Tablerow key={item.id} row={item}/>
                  )
