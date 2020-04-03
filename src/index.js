@@ -29,24 +29,20 @@ export default class MyComponent extends React.Component {
 
     items.tasks.map((item)=>{
       this.state.users.users.map((i)=>{
-        if (item.contractor_id === i.id ) {
-          item.contractor_id=i.last_name+" "+i.first_name;
-          console.log(item.contractor_id);
-      }
-     
-    })
-    })
-
-    items.tasks.map((item)=>{
-      this.state.statuses.statuses.map((i)=>{
-        if (item.status === i.id ) {
-          item.status=i.title;
-          console.log(item.status);
+        this.state.statuses.statuses.map((j)=>{
+            
+          if (item.contractor_id === i.id ) {
+                item.contractor_id=`${i.last_name} ${i.first_name}`;
+                console.log(item.contractor_id);
         }
-      })
+          if (item.status === j.id ) {
+                item.status=j.title;
+                console.log(item.status);
+          }
+        })
+    })
     })
 
-  
     this.setState({
       tasks:items
      })
