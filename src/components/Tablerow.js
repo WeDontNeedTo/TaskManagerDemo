@@ -129,6 +129,7 @@ function Status(props){
     let isDo = props.isDo
     const isCancel=props.isCancel
     const isClose=props.isClose
+    
     if(isClose)
     {
         return <Closed/>
