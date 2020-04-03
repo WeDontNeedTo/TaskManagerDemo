@@ -132,7 +132,6 @@ function Status(props){
     if(isClose)
     {
         return <Closed/>
-        
     }
     else if(isCancel)
     {
