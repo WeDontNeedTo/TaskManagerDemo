@@ -1,0 +1,9 @@
+#title{
+    cursor: pointer;
+}
+#buttons>input{
+    margin: 10px auto;
+    margin-left: 6px;
+    padding: 5px auto;
+    width: 95%
+}

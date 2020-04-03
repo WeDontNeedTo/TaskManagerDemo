@@ -52,7 +52,7 @@ export default class MyComponent extends React.Component {
   render() {
     
    return(
-      <div>
+      <div className="container-fluid">
         <table border="1">
         <caption>Список задач</caption>
         <Header/>
