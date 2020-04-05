@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 
-function App() {
+function Header() {
    
 
 return (
-    <tr>
-        <th>Задача</th>
-        <th>Название</th>
-        <th>Исполнитель</th>
-        <th>Статус</th>
-        <th>Сменить статус задачи</th>
-</tr>
+  <thead>
+      <tr>
+          <th>Задача</th>
+          <th>Название</th>
+          <th>Исполнитель</th>
+          <th>Статус</th>
+          <th>Сменить статус задачи</th>
+      </tr>
+</thead>
   );
 }
 
-export default App;
+export default Header;
