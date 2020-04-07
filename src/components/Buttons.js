@@ -27,29 +27,29 @@ function Buttons(props){
         console.log("did");
         return(
             <td id="buttons">
-                <input type="button" id="btnClose" onClick={props.func3}  className="btn btn-danger"  value="Закрыть"></input>
+                <input type="button" id="btnClose" onClick={props.func3}  className="btn btn-danger btn-sm"  value="Закрыть"></input>
             </td>
         )
      
     }
 
 
-    if( props.status==="Новая"  && props.toggle)
+    if( props.status==="Новая" )
     {
         return(
             <td id="buttons">
-                <input type="button" id="btnDo" onClick={props.func1} className="btn btn-success" value="Выполнить"/>
-                <input type="button" id="btnCancel" onClick={props.func2}  className="btn btn-warning"  value="Отменить"/>
+                <input type="button" id="btnDo" onClick={props.func1} className="btn btn-success btn-sm" value="Выполнить"/>
+                <input type="button" id="btnCancel" onClick={props.func2}  className="btn btn-warning btn-sm"  value="Отменить"/>
             </td>
         )
         
     }
 
-    else if( props.status==="Выполнена"  && (props.toggle || props.isDo)) 
+    else if( props.status==="Выполнена" ) 
     {
         return(
             <td id="buttons">
-                <input type="button" id="btnClose" onClick={props.func3}  className="btn btn-danger"  value="Закрыть"></input>
+                <input type="button" id="btnClose" onClick={props.func3}  className="btn btn-danger btn-sm"  value="Закрыть"></input>
             </td>
         )
         
