@@ -1,55 +1,35 @@
 import React from 'react';
 import './tablerow.css';
+import _ from 'lodash'
 
 
 function Buttons(props){
 
-    if(props.isClose)
-    {
-        console.log("closed");
-        return(
-            <td id="buttons"></td>
-        )
-    
-    }
-
-    if(props.isCancel)
-    {
-        console.log("cNCELed");
-        return(
-            <td id="buttons"></td>
-        )
-       
-    }
-
-    if(props.isDo)
-    {
-        console.log("did");
-        return(
-            <td id="buttons">
-                <input type="button" id="btnClose" onClick={props.func3}  className="btn btn-danger btn-sm"  value="Закрыть"></input>
-            </td>
-        )
-     
-    }
+   
+   function doClick(btn, action){
+        let i=props.tasks.tasks.indexOf(btn,0);
+        let arr= _.cloneDeep(props.tasks);
+        arr.tasks[i].status=action;
+        props.do(arr)
+     }
 
 
-    if( props.status==="Новая" )
+    if(props.item.status===1 )
     {
         return(
             <td id="buttons">
-                <input type="button" id="btnDo" onClick={props.func1} className="btn btn-success btn-sm" value="Выполнить"/>
-                <input type="button" id="btnCancel" onClick={props.func2}  className="btn btn-warning btn-sm"  value="Отменить"/>
+                <input type="button" id="btnDo" onClick={()=>doClick(props.item,2)}  className="btn btn-primary btn-sm" value="Выполнить"/>
+                <input type="button" id="btnCancel"  onClick={()=>doClick(props.item,4)} className="btn btn-warning btn-sm"  value="Отменить"/>
             </td>
         )
         
     }
 
-    else if( props.status==="Выполнена" ) 
+    else if( props.item.status===2 ) 
     {
         return(
             <td id="buttons">
-                <input type="button" id="btnClose" onClick={props.func3}  className="btn btn-danger btn-sm"  value="Закрыть"></input>
+                <input type="button" id="btnClose" onClick={()=>doClick(props.item,3)}   className="btn btn-success btn-sm"  value="Закрыть"></input>
             </td>
         )
         
@@ -59,7 +39,9 @@ function Buttons(props){
     else
     {
         return(
-            <td id="buttons"></td>
+            <td id="buttons">
+                <input type="button" id="btnClose"   className="btn btn-secondary btn-sm"  value="Эту задачу изменить нельзя"></input>
+            </td>
         )
     
     }

@@ -1,22 +1,38 @@
 import React from 'react';
 
 function Status(props){
-    return(
-        //здесь я меняю массив с пропсов, если нашел соответствие  
-        <td>
-            {
-                props.task.tasks.map(task => {
-                    props.status.statuses.map(status => {
-                        if (task.status === status.id) 
-                        {
-                            task.status=status.title
-                            console.log(task.status)
-                            return `${task.status}` 
-                        }
-                })
-          })
-          
+
+    function newColor(num){
+        //функция для смены текста задачи
+        let style
+        switch (num) {
+            case 2:
+                style={color:'#008000'};
+                break
+            case 3:
+                style={color:'#696969'};
+            break
+            case 4:
+                style={color:'#FFA500'};
+                break
+           default:
+               break;
         }
+        return style
+    }
+    
+
+const st=newColor(props.item)
+
+    return(
+        <td align="center">
+            {
+                props.status.statuses.map(status=>{
+                    if(props.item===status.id){
+                        return <p key={status.id} style={st}>{status.title} </p>
+                    }
+                })
+            }
         </td>
     )
     

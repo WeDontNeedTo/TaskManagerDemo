@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 
 
 class Users extends Component {
-    //здесь я просто вывожу ФИО, если нашел соответствие, массив не меняется 
   render() {
     return (
       <td>

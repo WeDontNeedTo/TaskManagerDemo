@@ -18,44 +18,36 @@ class App extends React.Component {
       tasks:tasks,
       users:usersdata,
       statuses:statusesdata,
-      isDo:false,
-      isCancel:false,
-      isClose:false
     }
-
-    this.clickDo=this.clickDo.bind(this);
-    this.clickCancel=this.clickCancel.bind(this);
-    this.clickClose=this.clickClose.bind(this);
    
   }
 
  
-clickDo(){
-    this.setState({isDo:true});
-    console.log("DO!")
-}
+  doClick(arr){
+    this.setState({tasks:arr})
+    let state = JSON.stringify(this.state.tasks)
+    localStorage.setItem('tasks', state)
+  } 
 
-clickCancel(){
-    this.setState({isCancel:true});
-    console.log("CNL!");
-}
-
-clickClose(){
-    this.setState({isClose:true});
-    console.log("CLS!");
-}
 
 
   componentDidMount(){
+    if(localStorage.tasks){
+      this.setState({tasks:JSON.parse(localStorage.getItem('tasks'))})
+      console.log("Что то есть!")
+    }
+    else{
+      console.log("Чего то нет!")
+      const newTasks = _.cloneDeep(this.state.tasks)
+      this.setState({tasks:newTasks})
+    }
     
-    const newTasks = _.cloneDeep(this.state.tasks)
-    this.setState({tasks:newTasks})
   }
-    
+
+
+   
 
   render() {
-    const { isDo, isCancel, isClose}=this.state;
-
    return(
       <div className="container-fluid">
         <table border="1">
@@ -67,21 +59,9 @@ clickClose(){
                     <tr key={item.id}>
                     <td>{item.id} </td>
                     <td id="title">{item.title}</td>
-
-                    {/* в юзеры я пробую передать item c мапа тасок, который рендерится здесь выше,
-                        значения выводятся, все имена и фамилии на месте - см. Users.js
-                     */}
-
                     <Users users={this.state.users} item={item.contractor_id} />
-
-                    {/* в статусы я передаю стейты и обрабатываю там по-другому
-                      значения "как бы есть", т.к. рендер кнопок зависит от статусов
-                      но в таблице их нет - см Status.js
-                     */}
-                    <Status status = {this.state.statuses} task={this.state.tasks}/>
-                    <Buttons status={item.status} 
-                      func1={this.clickDo} func2={this.clickCancel} func3={this.clickClose} 
-                      isDo={isDo} isCancel={isCancel} isClose={isClose}/> 
+                    <Status status = {this.state.statuses} item={item.status}/>
+                    <Buttons tasks={this.state.tasks} item={item} do={this.doClick.bind(this)}/> 
             </tr>)
                 })}
               </tbody>
