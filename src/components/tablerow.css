@@ -8,18 +8,4 @@
     width: 95%
 }
 
-#search{
-    height: 4vh;
-    width: 20vw;
-    margin-left: 15px;
-}
 
-#search-submit{
-    margin-left: 15px;
-    height: 4vh;
-    top: 0;
-    right: 0;
-    padding: 5px auto;
-    cursor: pointer;
-    text-align: center;
-}

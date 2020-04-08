@@ -5,11 +5,17 @@ import _ from 'lodash'
 
 function Buttons(props){
 
+console.log(props.tasks.tasks);
    
    function doClick(btn, action){
+        console.log(btn);
+        console.log(props.tasks.tasks);
         let i=props.tasks.tasks.indexOf(btn,0);
         let arr= _.cloneDeep(props.tasks);
+        console.log(i);
+        console.log(arr.tasks);
         arr.tasks[i].status=action;
+        console.log(arr);
         props.do(arr)
      }
 
@@ -40,7 +46,7 @@ function Buttons(props){
     {
         return(
             <td id="buttons">
-                <input type="button" id="btnClose"   className="btn btn-secondary btn-sm"  value="Эту задачу изменить нельзя"></input>
+                <input type="button" id="btnClose"   className="btn btn-secondary btn-sm"  disabled value="Эту задачу изменить нельзя"></input>
             </td>
         )
     

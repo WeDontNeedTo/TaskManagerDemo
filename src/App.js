@@ -18,18 +18,60 @@ class App extends React.Component {
       tasks:tasks,
       users:usersdata,
       statuses:statusesdata,
+      flag:null,
+      value:null
     }
    
   }
 
  
   doClick(arr){
-    this.setState({tasks:arr})
-    let state = JSON.stringify(this.state.tasks)
-    localStorage.setItem('tasks', state)
+    this.setState({tasks:arr}, ()=>{
+      localStorage.setItem('tasks', JSON.stringify(arr))
+    })
+
   } 
 
+  filterUser(val){
+    console.log(val);
+    this.setState({
+      flag:null,
+      value:null
+    })
+    console.log(val==null);
+    if(val==null){
+      this.setState({
+        flag:null,
+        value:null
+      })
+    }
+    else{
+      this.setState({
+        flag:true,
+        value:val
+      })
+    }
+ 
+    console.log(this.state.flag, this.state.value)
+    
+  }
 
+
+  
+  showTable(a1,a2){
+    console.log(this.state.flag, this.state.value)
+      if(a1==null && a2==null){
+        console.log("standard tasks")
+        return this.state.tasks
+      }
+      else{
+        console.log("filtered tasks")
+        let mas=_.cloneDeep(this.state.tasks);
+        mas.tasks = mas.tasks.filter(i=>i.contractor_id===a2 )
+        console.log(mas);
+        return mas
+      }
+  }
 
   componentDidMount(){
     if(localStorage.tasks){
@@ -41,6 +83,8 @@ class App extends React.Component {
       const newTasks = _.cloneDeep(this.state.tasks)
       this.setState({tasks:newTasks})
     }
+
+    
     
   }
 
@@ -52,16 +96,16 @@ class App extends React.Component {
       <div className="container-fluid">
         <table border="1">
           <caption>Список задач</caption>
-            <Header/>
+            <Header  filterUser={this.filterUser.bind(this)} tasks={this.state.tasks} users={this.state.users.users} statuses={this.state.statuses.statuses}/>
               <tbody>
-                {this.state.tasks.tasks.map((item)=>{
+                {this.showTable(this.state.flag,this.state.value).tasks.map((item)=>{
                   return(
                     <tr key={item.id}>
                     <td>{item.id} </td>
                     <td id="title">{item.title}</td>
                     <Users users={this.state.users} item={item.contractor_id} />
                     <Status status = {this.state.statuses} item={item.status}/>
-                    <Buttons tasks={this.state.tasks} item={item} do={this.doClick.bind(this)}/> 
+                    <Buttons tasks={this.state.tasks}  item={item} do={this.doClick.bind(this)}/> 
             </tr>)
                 })}
               </tbody>
@@ -72,3 +116,22 @@ class App extends React.Component {
 }
 
 export default App
+
+
+    // if(flag) {
+    //   this.setState({tasks:tasks})
+    //   this.setState({tasks:mas});
+    // }
+    // else{
+    //   this.setState({tasks:tasks})
+    // }
+
+    // let mas= _.cloneDeep(this.props.tasks);
+    //   mas.tasks=mas.tasks.filter(i=>{
+    //     console.log(i.contractor_id);
+    //     console.log(+this.state.value)
+    //     console.log(i.contractor_id=== +this.state.value);
+    //     return i.contractor_id=== +this.state.value;
+    //   })
+    // console.log(mas.tasks);
+    

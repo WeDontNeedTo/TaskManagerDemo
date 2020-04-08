@@ -21,17 +21,5 @@ code {
 th{
   text-align: center;
   font-style: italic;
-}
-#buttons>input{
-  margin: 20px auto;
-  margin-left: 6px;
-  padding: 20px auto;
-  width: 95%;
-  
-}
-
-
-#name0,#name1,#name2,#name3,
-#name4,#name5,#name6,#name7 {
-  cursor: pointer;
+  padding:10px;
 }
