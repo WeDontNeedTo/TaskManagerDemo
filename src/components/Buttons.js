@@ -5,16 +5,20 @@ import _ from 'lodash'
 
 function Buttons(props){
 
-console.log(props.tasks.tasks);
+//console.log(props.tasks.tasks);
    
    function doClick(btn, action){
         console.log(btn);
         console.log(props.tasks.tasks);
-        let i=props.tasks.tasks.indexOf(btn,0);
+        
         let arr= _.cloneDeep(props.tasks);
-        console.log(i);
+       
         console.log(arr.tasks);
-        arr.tasks[i].status=action;
+        arr.tasks.map(i=>{
+            if(i.id===btn.id){
+                return i.status=action
+            }
+        })
         console.log(arr);
         props.do(arr)
      }

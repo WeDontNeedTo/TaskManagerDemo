@@ -32,26 +32,37 @@ class App extends React.Component {
 
   } 
 
-  filterUser(val){
+  filter(val,flag){
     console.log(val);
     this.setState({
       flag:null,
       value:null
     })
-    console.log(val==null);
-    if(val==null){
+    console.log(val==='null');
+    if(val==='null'){
       this.setState({
         flag:null,
         value:null
       })
     }
     else{
-      this.setState({
-        flag:true,
-        value:val
-      })
+      if(typeof(val)==="string"){
+        this.setState({
+          flag:flag,
+          value:+val
+        })
+      }
+      else{
+        this.setState({
+          flag:flag,
+          value:val
+        })
+      }
+      
     }
  
+
+    
     console.log(this.state.flag, this.state.value)
     
   }
@@ -65,11 +76,31 @@ class App extends React.Component {
         return this.state.tasks
       }
       else{
-        console.log("filtered tasks")
-        let mas=_.cloneDeep(this.state.tasks);
-        mas.tasks = mas.tasks.filter(i=>i.contractor_id===a2 )
-        console.log(mas);
-        return mas
+        console.log(a1);
+        switch(a1){
+          case 'user':
+            console.log("filtered tasks user")
+            let mas=_.cloneDeep(this.state.tasks);
+            mas.tasks = mas.tasks.filter(i=>i.contractor_id===a2 )
+            console.log(mas);
+            return mas
+          case 'status':
+            console.log("filtered tasks status")
+            let arr=_.cloneDeep(this.state.tasks);
+            arr.tasks = arr.tasks.filter(i=>i.status===a2 )
+            console.log(arr);
+            return arr
+          case 'title':
+             console.log("filtered tasks title")
+            //  let s=_.cloneDeep(this.state.tasks);
+            //  s.tasks = s.tasks.filter((i,index)=> i.title===a2[index].title )
+             console.log(a2);
+             return a2
+
+            default:break;
+
+        }
+       
       }
   }
 
@@ -96,7 +127,7 @@ class App extends React.Component {
       <div className="container-fluid">
         <table border="1">
           <caption>Список задач</caption>
-            <Header  filterUser={this.filterUser.bind(this)} tasks={this.state.tasks} users={this.state.users.users} statuses={this.state.statuses.statuses}/>
+            <Header filterUser={this.filter.bind(this)} filterStatus={this.filter.bind(this)} filterTask={this.filter.bind(this)} tasks={this.state.tasks} users={this.state.users.users} statuses={this.state.statuses.statuses}/>
               <tbody>
                 {this.showTable(this.state.flag,this.state.value).tasks.map((item)=>{
                   return(
