@@ -9,12 +9,12 @@ function Buttons(props){
    
    function doClick(btn, action){
         console.log(btn);
-        console.log(props.tasks.tasks);
+        console.log(props.tasks);
         
         let arr= _.cloneDeep(props.tasks);
        
         console.log(arr.tasks);
-        arr.tasks.map(i=>{
+        arr.map(i=>{
             if(i.id===btn.id){
                 return i.status=action
             }

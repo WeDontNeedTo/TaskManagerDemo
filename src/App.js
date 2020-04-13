@@ -9,13 +9,13 @@ import usersdata from './users.json';
 import statusesdata from './statuses.json';
 import _ from 'lodash'
   
-
+let filtered=[];
 class App extends React.Component {
 
   constructor(props){
     super(props);
     this.state={
-      tasks:tasks,
+      tasks:tasks.tasks,
       users:usersdata,
       statuses:statusesdata,
       flag:null,
@@ -46,18 +46,11 @@ class App extends React.Component {
       })
     }
     else{
-      if(typeof(val)==="string"){
-        this.setState({
-          flag:flag,
-          value:+val
-        })
-      }
-      else{
+
         this.setState({
           flag:flag,
           value:val
         })
-      }
       
     }
  
@@ -71,6 +64,19 @@ class App extends React.Component {
   
   showTable(a1,a2){
     console.log(this.state.flag, this.state.value)
+    // console.log(a1==='user');
+    // console.log(arr);
+
+    // filtered=arr;
+   
+
+    // if(a1==='user') filtered= this.state.tasks.filter(i=>i.contractor_id==a2 )
+    // if(a1==='status') filtered=this.state.tasks.filter(i=>i.status==a2 )
+    // if(a1==='title') filtered=this.state.tasks.filter(i=>(i.title.toLowerCase().includes(a2.toLowerCase())))
+
+    // console.log(filtered)
+    // return filtered;
+
       if(a1==null && a2==null){
         console.log("standard tasks")
         return this.state.tasks
@@ -80,28 +86,23 @@ class App extends React.Component {
         switch(a1){
           case 'user':
             console.log("filtered tasks user")
-            let mas=_.cloneDeep(this.state.tasks);
-            mas.tasks = mas.tasks.filter(i=>i.contractor_id===a2 )
-            console.log(mas);
-            return mas
+            console.log(this.state.tasks.filter(i=>i.contractor_id==a2 ))
+            return this.state.tasks.filter(i=>i.contractor_id==a2 )
           case 'status':
             console.log("filtered tasks status")
-            let arr=_.cloneDeep(this.state.tasks);
-            arr.tasks = arr.tasks.filter(i=>i.status===a2 )
-            console.log(arr);
-            return arr
+            return this.state.tasks.filter(i=>i.status==a2 )
           case 'title':
-             console.log("filtered tasks title")
-            //  let s=_.cloneDeep(this.state.tasks);
-            //  s.tasks = s.tasks.filter((i,index)=> i.title===a2[index].title )
-             console.log(a2);
-             return a2
-
+            console.log("filtered tasks title")
+            return this.state.tasks.filter(i=>(i.title.toLowerCase().includes(a2.toLowerCase())))
             default:break;
-
+          }
+          
         }
        
-      }
+  }
+
+  clear(){
+    localStorage.clear();
   }
 
   componentDidMount(){
@@ -109,13 +110,6 @@ class App extends React.Component {
       this.setState({tasks:JSON.parse(localStorage.getItem('tasks'))})
       console.log("Что то есть!")
     }
-    else{
-      console.log("Чего то нет!")
-      const newTasks = _.cloneDeep(this.state.tasks)
-      this.setState({tasks:newTasks})
-    }
-
-    
     
   }
 
@@ -126,10 +120,12 @@ class App extends React.Component {
    return(
       <div className="container-fluid">
         <table border="1">
-          <caption>Список задач</caption>
+          <caption>
+            <button className="btn btn-outline-warning btn-sm" onClick={this.clear.bind(this)}>Сбросить localStorage</button>
+          </caption>
             <Header filterUser={this.filter.bind(this)} filterStatus={this.filter.bind(this)} filterTask={this.filter.bind(this)} tasks={this.state.tasks} users={this.state.users.users} statuses={this.state.statuses.statuses}/>
               <tbody>
-                {this.showTable(this.state.flag,this.state.value).tasks.map((item)=>{
+                {this.showTable(this.state.flag,this.state.value).map((item)=>{
                   return(
                     <tr key={item.id}>
                     <td>{item.id} </td>
@@ -148,21 +144,3 @@ class App extends React.Component {
 
 export default App
 
-
-    // if(flag) {
-    //   this.setState({tasks:tasks})
-    //   this.setState({tasks:mas});
-    // }
-    // else{
-    //   this.setState({tasks:tasks})
-    // }
-
-    // let mas= _.cloneDeep(this.props.tasks);
-    //   mas.tasks=mas.tasks.filter(i=>{
-    //     console.log(i.contractor_id);
-    //     console.log(+this.state.value)
-    //     console.log(i.contractor_id=== +this.state.value);
-    //     return i.contractor_id=== +this.state.value;
-    //   })
-    // console.log(mas.tasks);
-    

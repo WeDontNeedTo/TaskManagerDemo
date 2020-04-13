@@ -19,16 +19,11 @@ class Header extends React.Component {
 
 
    searchTasks(flag,event){
-     let mas=_.cloneDeep(this.props.tasks);
-     mas.tasks=mas.tasks.filter(i=>{ 
-       if(i.title.toLowerCase().includes(event.target.value.toLowerCase()))
-       {
-         return i;
-       } 
-      })
-     console.log(mas);
-     this.setState({flag:flag}, ()=>
-     this.props.filterTask(mas, this.state.flag))
+     console.log(event.target.value)
+     this.setState({flag:flag, value:event.target.value}, ()=> {
+      this.props.filterTask(this.state.value, this.state.flag)
+     })
+     
     }
 
    handleChangeUser(flag,event){
