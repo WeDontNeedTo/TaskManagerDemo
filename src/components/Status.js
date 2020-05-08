@@ -29,7 +29,7 @@ const st=newColor(props.item)
             {
                 props.status.statuses.map(status=>{
                     if(props.item===status.id){
-                        return <p key={status.id} style={st}>{status.title} </p>
+                        return <p key={status.id} style={st} className={`status${props.item}`}>{status.title} </p>
                     }
                 })
             }

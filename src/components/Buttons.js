@@ -45,12 +45,11 @@ function Buttons(props){
         
     }
 
-
     else
     {
         return(
             <td id="buttons">
-                <input type="button" id="btnClose"   className="btn btn-secondary btn-sm"  disabled value="Эту задачу изменить нельзя"></input>
+                <input type="button" id="btnCloseDis"   className="btn btn-secondary btn-sm"  disabled value="Эту задачу изменить нельзя"></input>
             </td>
         )
     
