@@ -52,6 +52,8 @@ class Header extends React.Component {
             Название
             <form>
               <input
+                autoFocus={true}
+                className="form-search"
                 type="text"
                 placeholder="Поиск по задачам.."
                 onChange={this.searchTasks.bind(this, title)}

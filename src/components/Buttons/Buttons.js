@@ -1,5 +1,5 @@
 import React from 'react';
-import './tablerow.css';
+import '../tablerow.css';
 import _ from 'lodash'
 
 

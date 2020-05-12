@@ -1,9 +1,9 @@
 import React from "react";
 import "./index.css";
-import Header from "./components/Header";
-import Buttons from "./components/Buttons";
-import Status from "./components/Status";
-import Users from "./components/Users";
+import Header from "./components/Header/Header";
+import Buttons from "./components/Buttons/Buttons";
+import Status from "./components/Status/Status";
+import Users from "./components/Users/Users";
 import tasks from "./tasks.json";
 import usersdata from "./users.json";
 import statusesdata from "./statuses.json";
