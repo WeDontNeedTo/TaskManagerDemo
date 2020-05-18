@@ -4,12 +4,12 @@ import Header from "./components/Header/Header";
 import Buttons from "./components/Buttons/Buttons";
 import Status from "./components/Status/Status";
 import Users from "./components/Users/Users";
-import tasks from "./tasks.json";
-import usersdata from "./users.json";
-import statusesdata from "./statuses.json";
+import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
+import tasks from "./utils/tasks.json";
+import usersdata from "./utils/users.json";
+import statusesdata from "./utils/statuses.json";
 import _ from "lodash";
 
-let filtered = [];
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,8 +17,11 @@ class App extends React.Component {
       tasks: tasks.tasks,
       users: usersdata,
       statuses: statusesdata,
-      flag: null,
-      value: null,
+      term: "",
+      contractorFilter: "",
+      statusFilter: "",
+      valueUser: "",
+      valueStatus: "",
     };
   }
 
@@ -28,69 +31,70 @@ class App extends React.Component {
     });
   }
 
-  filter(val, flag) {
-    console.log(val);
-    this.setState({
-      flag: null,
-      value: null,
-    });
+  search = (term, arr) => {
+    if (term === "" || term == null) {
+      return arr;
+    }
+    return arr.filter((i) =>
+      i.title.toLowerCase().includes(term.toLowerCase())
+    );
+  };
 
-    console.log(val === "null");
-    if (val === "null") {
-      this.setState({
-        flag: null,
-        value: null,
-      });
+  setTermSeacrh = (term) => {
+    this.setState({ term: term });
+  };
+
+  filter = (flagUser, flagStatus, valueUser, valueStatus, arr) => {
+    if (flagStatus !== "" || flagUser !== "") {
+      if (flagUser === "user") {
+        arr = arr.filter((i) => i.contractor_id === +valueUser);
+      }
+      if (flagStatus === "status") {
+        arr = arr.filter((i) => i.status === +valueStatus);
+      }
     } else {
-      this.setState({
-        flag: flag,
-        value: val,
-      });
+      return arr;
     }
 
-    console.log(this.state.flag, this.state.value);
-  }
+    return arr;
+  };
 
-  showTable(flag, value, arr) {
-    console.log(flag, value, arr);
+  setContractorFilter = (flagContractor, value) => {
+    if (value === "all") {
+      this.setState(() => {
+        return { contractorFilter: "", valueUser: value };
+      });
+    } else {
+      this.setState(() => {
+        return { contractorFilter: flagContractor, valueUser: value };
+      });
+    }
+  };
 
-    filtered = _.cloneDeep(arr);
-    console.log(filtered);
+  setStatusFilter = (flagStatus, value) => {
+    if (value === "all") {
+      this.setState(() => {
+        return { statusFilter: "", valueStatus: value };
+      });
+    } else {
+      this.setState(() => {
+        return { statusFilter: flagStatus, valueStatus: value };
+      });
+    }
+  };
 
-    if (flag === "user")
-      {filtered = filtered.filter((i) => i.contractor_id == value);}
-    if (flag === "status") 
-      {filtered = filtered.filter((i) => i.status == value);}
-    if (flag === "title")
-      {filtered = filtered.filter((i) =>
-        i.title.toLowerCase().includes(value.toLowerCase())
-      );}
-
-    console.log(filtered);
-    return filtered;
-
-    // if(flag==null && value==null){
-    //   console.log("standard tasks")
-    //   return this.state.tasks
-    // }
-    // else{
-    //   console.log(flag);
-    //   switch(flag){
-    //     case 'user':
-    //       console.log("filtered tasks user")
-    //       console.log(this.state.tasks.filter(i=>i.contractor_id==value ))
-    //       return this.state.tasks.filter(i=>i.contractor_id==value )
-    //     case 'status':
-    //       console.log("filtered tasks status")
-    //       return this.state.tasks.filter(i=>i.status==value )
-    //     case 'title':
-    //       console.log("filtered tasks title")
-    //       return this.state.tasks.filter(i=>(i.title.toLowerCase().includes(value.toLowerCase())))
-    //       default:break;
-    //     }
-
-    //   }
-  }
+  addTask = (newItem) => {
+    let newTasks = _.cloneDeep(this.state.tasks);
+    newTasks.push(newItem);
+    this.setState(
+      () => {
+        return { tasks: newTasks };
+      },
+      () => {
+        localStorage.setItem("tasks", JSON.stringify(newTasks));
+      }
+    );
+  };
 
   clear() {
     localStorage.clear();
@@ -99,46 +103,58 @@ class App extends React.Component {
   componentDidMount() {
     if (localStorage.tasks) {
       this.setState({ tasks: JSON.parse(localStorage.getItem("tasks")) });
-      console.log("Что то есть!");
     }
   }
 
   render() {
+    const {
+      term,
+      contractorFilter,
+      statusFilter,
+      valueUser,
+      valueStatus,
+      tasks,
+    } = this.state;
+    const visibleTasks = this.filter(
+      contractorFilter,
+      statusFilter,
+      valueUser,
+      valueStatus,
+      this.search(term, tasks)
+    );
+
     return (
       <div className="container-fluid">
-        <table border="1">
+        <table border="1" className="main-table">
           <caption>
+            <AddTaskForm addTask={this.addTask} />
             <button
-              className="btn btn-outline-warning btn-sm"
+              className="btn btn-warning btn-sm"
               onClick={this.clear.bind(this)}
             >
               Сбросить localStorage
             </button>
           </caption>
           <Header
-            filterUser={this.filter.bind(this)}
-            filterStatus={this.filter.bind(this)}
-            filterTask={this.filter.bind(this)}
-            tasks={this.state.tasks}
+            setTermSeacrh={this.setTermSeacrh}
+            setContractorFilter={this.setContractorFilter}
+            setStatusFilter={this.setStatusFilter}
+            tasks={tasks}
             users={this.state.users.users}
             statuses={this.state.statuses.statuses}
           />
           <tbody>
-            {this.showTable(
-              this.state.flag,
-              this.state.value,
-              this.state.tasks
-            ).map((item) => {
+            {visibleTasks.map((item, index) => {
               return (
                 <tr key={item.id}>
-                  <td>{item.id} </td>
+                  <td>{index} </td>
                   <td id="title">{item.title}</td>
                   <Users users={this.state.users} item={item.contractor_id} />
                   <Status status={this.state.statuses} item={item.status} />
                   <Buttons
-                    tasks={this.state.tasks}
+                    tasks={tasks}
                     item={item}
-                    do={this.doClick.bind(this)}
+                    doClick={this.doClick.bind(this)}
                   />
                 </tr>
               );

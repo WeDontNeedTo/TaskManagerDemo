@@ -23,3 +23,14 @@ th{
   font-style: italic;
   padding:10px;
 }
+
+tr{
+  text-align: center;
+}
+
+#buttons>input{
+  margin: 10px auto;
+  margin-left: 6px;
+  padding: 5px auto;
+  width: 45%
+}

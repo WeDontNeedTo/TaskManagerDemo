@@ -1,42 +1,41 @@
-import React from 'react';
+/* eslint-disable array-callback-return */
+import React from "react";
 
-function Status(props){
-
-    function newColor(num){
-        //функция для смены текста задачи
-        let style
-        switch (num) {
-            case 2:
-                style={color:'#008000'};
-                break
-            case 3:
-                style={color:'#696969'};
-            break
-            case 4:
-                style={color:'#FFA500'};
-                break
-           default:
-               break;
-        }
-        return style
+const Status = ({ item, status }) => {
+  function newColor(num) {
+    //функция для смены текста задачи
+    let style;
+    switch (num) {
+      case 2:
+        style = { color: "#38c33b", fontWeight: "bold" };
+        break;
+      case 3:
+        style = { color: "#696969", fontWeight: "bold" };
+        break;
+      case 4:
+        style = { color: "#FFA500", fontWeight: "bold" };
+        break;
+      default:
+        break;
     }
-    
+    return style;
+  }
 
-const st=newColor(props.item)
+  const st = newColor(item);
 
-    return(
-        <td align="center">
-            {
-                props.status.statuses.map(status=>{
-                    if(props.item===status.id){
-                        return <p key={status.id} style={st} className={`status${props.item}`}>{status.title} </p>
-                    }
-                })
-            }
-        </td>
-    )
-    
-}
+  return (
+    <td align="center">
+      {status.statuses.map((status) => {
+        if (item === status.id) {
+          return (
+            <p key={status.id} style={st} className={`status${item}`}>
+              {status.title}
+            </p>
+          );
+        }
+      })}
+    </td>
+  );
+};
 
-export default Status
-
+export default Status;

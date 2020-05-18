@@ -1,21 +1,16 @@
-  
-import React, { Component } from 'react'
+/* eslint-disable array-callback-return */
+import React from "react";
 
-
-class Users extends Component {
-  render() {
-    return (
-      <td>
-        {
-          this.props.users.users.map(user => {
-            if (this.props.item === user.id) {
-                return ` ${user.last_name} ${user.first_name} `
-            }
-          })
+const Users = ({ users, item }) => {
+  return (
+    <td>
+      {users.users.map((user) => {
+        if (item === user.id) {
+          return ` ${user.last_name} ${user.first_name} `;
         }
-      </td>
-    )
-  }
-}
+      })}
+    </td>
+  );
+};
 
-export default Users
+export default Users;

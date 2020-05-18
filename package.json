@@ -10,6 +10,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "react-test-renderer": "^16.13.1"
@@ -39,9 +40,9 @@
     "cypress": "^4.5.0",
     "json-loader": "^0.5.7"
   },
-  "jest":{
-    "clearMocks":false,
-    "collectCoverageFrom":[
+  "jest": {
+    "clearMocks": false,
+    "collectCoverageFrom": [
       "src/components/**/*.{js,jsx}"
     ]
   }

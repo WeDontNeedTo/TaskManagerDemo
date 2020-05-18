@@ -1,111 +1,83 @@
 import React from "react";
-import _ from "lodash";
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: "null", flag: "null", value1: "null" };
+const Header = ({
+  setTermSeacrh,
+  setContractorFilter,
+  setStatusFilter,
+  tasks,
+  users,
+  statuses,
+}) => {
+  const onSearch = (event) => {
+    setTermSeacrh(event.target.value);
+  };
+  const onFilterUser = (flag, value) => {
+    setContractorFilter(flag, value);
+  };
 
-    this.handleChangeUser = this.handleChangeUser.bind(this);
-    this.handleSubmitUser = this.handleSubmitUser.bind(this);
-    this.handleChangeStatus = this.handleChangeStatus.bind(this);
-    this.handleSubmitStatus = this.handleSubmitStatus.bind(this);
-    this.searchTasks = this.searchTasks.bind(this);
-  }
+  const onFilterStatus = (flag, value) => {
+    setStatusFilter(flag, value);
+  };
 
-  searchTasks(flag, event) {
-    console.log(event.target.value);
-    this.setState({ flag: flag, value: event.target.value }, () => {
-      this.props.filterTask(this.state.value, this.state.flag);
-    });
-  }
+  return (
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>
+          Название
+          <form>
+            <input
+              autoFocus={true}
+              className="form-search form-control"
+              type="text"
+              placeholder="Поиск по задачам.."
+              onChange={onSearch}
+            />
+          </form>
+        </th>
 
-  handleChangeUser(flag, event) {
-    this.setState({ value: event.target.value, flag: flag });
-    console.log(this.state.value);
-    console.log(this.state.flag);
-  }
+        <th>
+          Исполнитель
+          <form>
+            <select
+              className="form-control"
+              onChange={(event) => onFilterUser("user", event.target.value)}
+            >
+              <option value={"all"}>Все</option>
+              {users.map((i) => {
+                return (
+                  <option key={i.id} value={i.id}>
+                    {i.last_name} {i.first_name}
+                  </option>
+                );
+              })}
+            </select>
+          </form>
+        </th>
 
-  handleSubmitUser(event) {
-    this.props.filterUser(this.state.value, this.state.flag);
-    event.preventDefault();
-  }
+        <th>
+          Статус
+          <form>
+            <select
+              onChange={(event) => onFilterStatus("status", event.target.value)}
+              className="form-control"
+            >
+              <option value={"all"}>Все</option>
+              {statuses.map((i) => {
+                return (
+                  <option key={i.id} value={i.id}>
+                    {i.title}
+                  </option>
+                );
+              })}
+            </select>
+          </form>
+        </th>
 
-  handleChangeStatus(flag, event) {
-    this.setState({ value1: event.target.value, flag: flag });
-  }
-
-  handleSubmitStatus(event) {
-    this.props.filterStatus(this.state.value1, this.state.flag);
-    event.preventDefault();
-  }
-
-  render() {
-    const title = "title";
-    const user = "user";
-    const status = "status";
-    return (
-      <thead>
-        <tr>
-          <th>№</th>
-          <th>
-            Название
-            <form>
-              <input
-                autoFocus={true}
-                className="form-search"
-                type="text"
-                placeholder="Поиск по задачам.."
-                onChange={this.searchTasks.bind(this, title)}
-              />
-            </form>
-          </th>
-
-          <th>
-            Исполнитель
-            <form onSubmit={this.handleSubmitUser}>
-              <select
-                value={this.state.value}
-                onChange={this.handleChangeUser.bind(this, user)}
-              >
-                <option value={"null"}>Все</option>
-                {this.props.users.map((i) => {
-                  return (
-                    <option key={i.id} value={i.id}>
-                      {i.last_name} {i.first_name}
-                    </option>
-                  );
-                })}
-              </select>
-              <input type="submit" value="Применить фильтр" />
-            </form>
-          </th>
-
-          <th>
-            Статус
-            <form onSubmit={this.handleSubmitStatus}>
-              <select
-                value={this.state.value1}
-                onChange={this.handleChangeStatus.bind(this, status)}
-              >
-                <option value={"null"}>Все</option>
-                {this.props.statuses.map((i) => {
-                  return (
-                    <option key={i.id} value={i.id}>
-                      {i.title}
-                    </option>
-                  );
-                })}
-              </select>
-              <input type="submit" value="Применить фильтр" />
-            </form>
-          </th>
-
-          <th>Сменить статус задачи</th>
-        </tr>
-      </thead>
-    );
-  }
-}
+        <th>Сменить статус задачи</th>
+      </tr>
+    </thead>
+  );
+};
 
 export default Header;
